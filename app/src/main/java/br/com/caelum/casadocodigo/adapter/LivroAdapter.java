@@ -11,6 +11,8 @@ import java.util.List;
 
 import br.com.caelum.casadocodigo.R;
 import br.com.caelum.casadocodigo.modelo.Livro;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LivroAdapter extends RecyclerView.Adapter {
     private List<Livro> livros;
@@ -46,15 +48,17 @@ public class LivroAdapter extends RecyclerView.Adapter {
         return position % 2;
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView nome;
-        public final ImageView foto;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.item_livro_nome)
+        public TextView nome;
+
+        @BindView(R.id.item_livro_foto)
+        public ImageView foto;
 
         public ViewHolder(View view) {
             super(view);
 
-            nome = (TextView) view.findViewById(R.id.item_livro_nome);
-            foto = (ImageView) view.findViewById(R.id.item_livro_foto);
+            ButterKnife.bind(this, view);
         }
     }
 }
