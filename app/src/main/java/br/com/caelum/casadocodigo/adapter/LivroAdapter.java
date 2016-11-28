@@ -10,9 +10,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.caelum.casadocodigo.R;
+import br.com.caelum.casadocodigo.delegate.LivroDelegate;
 import br.com.caelum.casadocodigo.modelo.Livro;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LivroAdapter extends RecyclerView.Adapter {
     private List<Livro> livros;
@@ -50,15 +52,22 @@ public class LivroAdapter extends RecyclerView.Adapter {
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_livro_nome)
-        public TextView nome;
+        TextView nome;
 
         @BindView(R.id.item_livro_foto)
-        public ImageView foto;
+        ImageView foto;
 
         public ViewHolder(View view) {
             super(view);
 
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick(R.id.item_livro)
+        public void clickItem() {
+            Livro livro = livros.get(getAdapterPosition());
+            LivroDelegate delegate = (LivroDelegate) itemView.getContext();
+            delegate.lidaComLivroSelecionado(livro);
         }
     }
 }
