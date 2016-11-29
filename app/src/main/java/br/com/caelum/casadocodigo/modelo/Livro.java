@@ -17,6 +17,8 @@ public class Livro implements Serializable {
     private String urlFoto;
     private List<Autor> autores;
 
+    public Livro() {}
+
     public Livro(String nome, String descricao, List<Autor> autores) {
         this.nome = nome;
         this.descricao = descricao;

@@ -9,13 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import br.com.caelum.casadocodigo.R;
 import br.com.caelum.casadocodigo.adapter.LivroAdapter;
-import br.com.caelum.casadocodigo.modelo.Autor;
 import br.com.caelum.casadocodigo.modelo.Livro;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,17 +29,11 @@ public class ListaLivrosFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        List<Livro> livros = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            Autor autor = new Autor();
-            autor.setNome("Autor " + i);
-            Livro livro = new Livro("Livro " + i, "Descricao " + i, Arrays.asList(autor));
-            livros.add(livro);
-        }
-
-        recyclerView.setAdapter(new LivroAdapter(livros));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         return view;
     }
+
+    public void populaListaCom(List<Livro> livros) {
+        recyclerView.setAdapter(new LivroAdapter(livros));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+   }
 }
