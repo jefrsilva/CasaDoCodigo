@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.widget.Toast;
 
-import java.util.List;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import br.com.caelum.casadocodigo.R;
 import br.com.caelum.casadocodigo.delegate.LivrosDelegate;
+import br.com.caelum.casadocodigo.event.LivroEvent;
 import br.com.caelum.casadocodigo.fragment.DetalhesLivroFragment;
 import br.com.caelum.casadocodigo.fragment.ListaLivrosFragment;
 import br.com.caelum.casadocodigo.modelo.Livro;
@@ -17,7 +19,6 @@ import br.com.caelum.casadocodigo.server.WebClient;
 
 public class MainActivity extends AppCompatActivity implements LivrosDelegate {
 
-    private static final int REQUEST_PERMISSOES = 1;
     private ListaLivrosFragment listaLivrosFragment;
 
     @Override
@@ -30,7 +31,16 @@ public class MainActivity extends AppCompatActivity implements LivrosDelegate {
         transaction.replace(R.id.frame_principal, listaLivrosFragment);
         transaction.commit();
 
-        new WebClient(this).getLivros();
+        new WebClient().getLivros();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -47,12 +57,12 @@ public class MainActivity extends AppCompatActivity implements LivrosDelegate {
         transaction.commit();
     }
 
-    @Override
-    public void lidaComSucesso(List<Livro> livros) {
-        listaLivrosFragment.populaListaCom(livros);
+    @Subscribe
+    public void lidaComSucesso(LivroEvent livroEvent) {
+        listaLivrosFragment.populaListaCom(livroEvent.getLivros());
     }
 
-    @Override
+    @Subscribe
     public void lidaComErro(Throwable erro) {
         Toast.makeText(this, "Não foi possível carregar os livros...", Toast.LENGTH_SHORT).show();
     }
