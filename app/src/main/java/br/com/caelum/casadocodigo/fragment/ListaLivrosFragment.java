@@ -9,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.caelum.casadocodigo.R;
 import br.com.caelum.casadocodigo.adapter.LivroAdapter;
+import br.com.caelum.casadocodigo.listener.EndlessListListener;
 import br.com.caelum.casadocodigo.modelo.Livro;
+import br.com.caelum.casadocodigo.server.WebClient;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -22,18 +25,29 @@ public class ListaLivrosFragment extends Fragment {
     @BindView(R.id.lista_livros)
     RecyclerView recyclerView;
 
+    private List<Livro> livros = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_livros, container, false);
-
         ButterKnife.bind(this, view);
+
+        recyclerView.setAdapter(new LivroAdapter(livros));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return view;
     }
 
-    public void populaListaCom(List<Livro> livros) {
-        recyclerView.setAdapter(new LivroAdapter(livros));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    public void populaListaCom(final List<Livro> livros) {
+        this.livros.addAll(livros);
+        recyclerView.getAdapter().notifyDataSetChanged();
+
+        recyclerView.addOnScrollListener(new EndlessListListener() {
+            @Override
+            public void carregaMaisItens() {
+                new WebClient().getLivros(livros.size(), 10);
+            }
+        });
    }
 }
