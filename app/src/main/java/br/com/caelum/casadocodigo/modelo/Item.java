@@ -22,4 +22,18 @@ public class Item {
         return tipoDeCompra;
     }
 
+    public double getValor() {
+        switch (tipoDeCompra) {
+            case FISICO:
+                return livro.getValorFisico();
+
+            case VIRTUAL:
+                return livro.getValorVirtual();
+
+            default:
+                return livro.getValorDoisJuntos();
+
+        }
+    }
+
 }
