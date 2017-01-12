@@ -7,8 +7,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import br.com.caelum.casadocodigo.R;
 import br.com.caelum.casadocodigo.adapter.ItensAdapter;
+import br.com.caelum.casadocodigo.application.CasaDoCodigoApplication;
 import br.com.caelum.casadocodigo.modelo.Carrinho;
 import br.com.caelum.casadocodigo.modelo.Item;
 import butterknife.BindView;
@@ -25,13 +28,17 @@ public class CarrinhoActivity extends AppCompatActivity {
     @BindView(R.id.valor_carrinho)
     TextView valorTotal;
 
-    private Carrinho carrinho = new Carrinho();
+    @Inject
+    Carrinho carrinho;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrinho);
         ButterKnife.bind(this);
+
+        CasaDoCodigoApplication app = (CasaDoCodigoApplication) getApplication();
+        app.getComponent().inject(this);
     }
 
     @Override
@@ -48,7 +55,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         for (Item item : carrinho.getItens()) {
             total += item.getValor();
         }
-        valorTotal.setText("R$ " + total);
+        valorTotal.setText(String.format("R$ %.2f", total));
     }
 
 //    @OnClick(R.id.fab_carrinho)

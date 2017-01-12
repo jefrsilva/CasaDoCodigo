@@ -27,7 +27,7 @@
 
             <android.support.design.widget.CoordinatorLayout
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="250dp"
                 android:layout_margin="7dp"
                 android:layout_weight="3">
 
@@ -59,22 +59,46 @@
                         android:textSize="13sp"
                         android:textStyle="italic" />
 
+                    <Button
+                        android:id="@+id/detalhes_livro_comprar_fisico"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|bottom"
+                        android:text="Comprar Livro Físico - R$ 14,99"
+                        android:textColor="#FFF"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/colorAccent"
+                        app:elevation="10dp"
 
+                        />
+
+                    <Button
+                        android:id="@+id/detalhes_livro_comprar_ebook"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|bottom"
+                        android:text="Comprar E-Book - R$ 12,99"
+                        android:textColor="#FFF"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/colorAccent"
+                        app:elevation="10dp"
+
+                        />
+
+                    <Button
+                        android:id="@+id/detalhes_livro_comprar_ambos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|bottom"
+                        android:text="Comprar Ambos - R$ 19,99"
+                        android:textColor="#FFF"
+                        android:textStyle="bold"
+                        app:backgroundTint="@color/colorAccent"
+                        app:elevation="10dp"
+
+                        />
                 </LinearLayout>
 
-
-                <Button
-                    android:id="@+id/detalhes_livro_comprar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|bottom"
-                    android:text="Comprar"
-                    android:textColor="#FFF"
-                    android:textStyle="bold"
-                    app:backgroundTint="@color/colorAccent"
-                    app:elevation="10dp"
-
-                    />
 
             </android.support.design.widget.CoordinatorLayout>
 

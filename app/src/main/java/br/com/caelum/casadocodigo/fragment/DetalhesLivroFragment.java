@@ -6,14 +6,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import javax.inject.Inject;
 
 import br.com.caelum.casadocodigo.R;
+import br.com.caelum.casadocodigo.application.CasaDoCodigoApplication;
 import br.com.caelum.casadocodigo.modelo.Autor;
+import br.com.caelum.casadocodigo.modelo.Carrinho;
+import br.com.caelum.casadocodigo.modelo.Item;
 import br.com.caelum.casadocodigo.modelo.Livro;
+import br.com.caelum.casadocodigo.modelo.TipoDeCompra;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DetalhesLivroFragment extends Fragment {
 
@@ -38,6 +47,20 @@ public class DetalhesLivroFragment extends Fragment {
     @BindView(R.id.detalhes_livro_data_publicacao)
     TextView dataPublicacao;
 
+    @BindView(R.id.detalhes_livro_comprar_fisico)
+    Button botaoComprarFisico;
+
+    @BindView(R.id.detalhes_livro_comprar_ebook)
+    Button botaoComprarEbook;
+
+    @BindView(R.id.detalhes_livro_comprar_ambos)
+    Button botaoComprarAmbos;
+
+    private Livro livro;
+
+    @Inject
+    Carrinho carrinho;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,8 +68,11 @@ public class DetalhesLivroFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         Bundle arguments = getArguments();
-        Livro livro = (Livro) arguments.getSerializable("livro");
+        livro = (Livro) arguments.getSerializable("livro");
         populaCamposCom(livro);
+
+        CasaDoCodigoApplication app = (CasaDoCodigoApplication) getActivity().getApplication();
+        app.getComponent().inject(this);
 
         return view;
     }
@@ -67,6 +93,32 @@ public class DetalhesLivroFragment extends Fragment {
         numPaginas.setText(String.valueOf(livro.getNumPaginas()));
         isbn.setText(livro.getISBN());
         dataPublicacao.setText(livro.getDataPublicacao());
+
+        String textoComprarFisico = String.format("Comprar Livro Físico - R$ %.2f", livro.getValorFisico());
+        botaoComprarFisico.setText(textoComprarFisico);
+
+        String textoComprarEbook = String.format("Comprar E-book - R$ %.2f", livro.getValorVirtual());
+        botaoComprarEbook.setText(textoComprarEbook);
+
+        String textoComprarAmbos = String.format("Comprar Ambos - R$ %.2f", livro.getValorDoisJuntos());
+        botaoComprarAmbos.setText(textoComprarAmbos);
     }
 
+    @OnClick(R.id.detalhes_livro_comprar_fisico)
+    public void comprarFisico() {
+        Toast.makeText(getActivity(), "Livro adicionado ao carrinho!", Toast.LENGTH_SHORT).show();
+        carrinho.adiciona(new Item(livro, TipoDeCompra.FISICO));
+    }
+
+    @OnClick(R.id.detalhes_livro_comprar_ebook)
+    public void comprarEbook() {
+        Toast.makeText(getActivity(), "Livro adicionado ao carrinho!", Toast.LENGTH_SHORT).show();
+        carrinho.adiciona(new Item(livro, TipoDeCompra.VIRTUAL));
+    }
+
+    @OnClick(R.id.detalhes_livro_comprar_ambos)
+    public void comprarAmbos() {
+        Toast.makeText(getActivity(), "Livro adicionado ao carrinho!", Toast.LENGTH_SHORT).show();
+        carrinho.adiciona(new Item(livro, TipoDeCompra.JUNTOS));
+    }
 }

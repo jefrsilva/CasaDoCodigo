@@ -60,13 +60,13 @@ public class ItensAdapter extends RecyclerView.Adapter {
 
         switch (tipoDeCompra) {
             case FISICO:
-                return "R$ " + item.getLivro().getValorFisico();
+                return String.format("R$ %.2f", item.getLivro().getValorFisico());
 
             case VIRTUAL:
-                return "R$ " + item.getLivro().getValorVirtual();
+                return String.format("R$ %.2f", item.getLivro().getValorVirtual());
 
             default:
-                return "R$ " + item.getLivro().getValorDoisJuntos();
+                return String.format("R$ %.2f", item.getLivro().getValorDoisJuntos());
 
         }
 

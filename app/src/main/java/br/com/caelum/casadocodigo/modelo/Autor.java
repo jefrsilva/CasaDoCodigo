@@ -1,6 +1,8 @@
 package br.com.caelum.casadocodigo.modelo;
 
-public class Autor {
+import java.io.Serializable;
+
+public class Autor implements Serializable {
 
     private long id;
     private String nome;
