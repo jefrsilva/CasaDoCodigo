@@ -10,10 +10,12 @@ import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import br.com.caelum.casadocodigo.R;
 import br.com.caelum.casadocodigo.delegate.LivrosDelegate;
 import br.com.caelum.casadocodigo.event.LivroEvent;
+import br.com.caelum.casadocodigo.event.NotificacaoEvent;
 import br.com.caelum.casadocodigo.fragment.DetalhesLivroFragment;
 import br.com.caelum.casadocodigo.fragment.ListaLivrosFragment;
 import br.com.caelum.casadocodigo.modelo.Livro;
@@ -91,6 +93,9 @@ public class MainActivity extends AppCompatActivity implements LivrosDelegate {
         return detalhesLivroFragment;
     }
 
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void recebeNotificacao(NotificacaoEvent event) {
+        Toast.makeText(this, "Recebeu uma notificação do servidor", Toast.LENGTH_LONG).show();
+    }
 
 }
