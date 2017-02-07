@@ -51,7 +51,6 @@ public class ListaLivrosFragment extends Fragment {
                         if (task.isSuccessful()) {
                             firebaseRemoteConfig.activateFetched();
                             zebrada = firebaseRemoteConfig.getBoolean("tipo_da_lista");
-                        } else {
                         }
                         recyclerView.setAdapter(new LivroAdapter(livros, zebrada));
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
