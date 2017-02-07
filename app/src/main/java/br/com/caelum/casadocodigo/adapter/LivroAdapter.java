@@ -19,16 +19,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LivroAdapter extends RecyclerView.Adapter {
+    private final boolean zebrada;
     private List<Livro> livros;
 
-    public LivroAdapter(List<Livro> livros) {
+    public LivroAdapter(List<Livro> livros, boolean zebrada) {
         this.livros = livros;
+        this.zebrada = zebrada;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int tipoDeLayout = R.layout.item_livro_par;
-        if (viewType % 2 != 0) {
+        if (zebrada && viewType % 2 != 0) {
             tipoDeLayout = R.layout.item_livro_impar;
         }
         View view = LayoutInflater.from(parent.getContext()).inflate(tipoDeLayout, parent, false);

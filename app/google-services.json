@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "659878323953-6m9os8uv3s8uganhr38b7pq5lav1m5an.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "br.com.caelum.casadocodigo",
-            "certificate_hash": "84097083E932EFC9866A8C012DD0632A4D107B0F"
-          }
-        },
-        {
           "client_id": "659878323953-6kj0e3qpsonr8runfq61d76d7qg5goke.apps.googleusercontent.com",
           "client_type": 3
         }
